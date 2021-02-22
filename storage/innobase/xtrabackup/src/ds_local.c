@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 #include <my_thread_local.h>
 #include "common.h"
 #include "datasink.h"
+#include "file_utils.h"
 
 typedef struct {
 	File fd;
@@ -79,6 +80,15 @@ local_open(ds_ctxt_t *ctxt, const char *path,
 	ds_local_file_t *local_file;
 	ds_file_t	*file;
 	File 		fd;
+
+	{
+		int filepath_prefix_len;
+		safer_name_suffix(path, &filepath_prefix_len);
+		if (filepath_prefix_len != 0) {
+			fprintf(stderr, "Absolute file: %s\n", path);
+		}
+		DBUG_ASSERT(filepath_prefix_len == 0);
+	}
 
 	fn_format(fullpath, path, ctxt->root, "", MYF(MY_RELATIVE_PATH));
 

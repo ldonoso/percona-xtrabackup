@@ -180,6 +180,7 @@ MYSQL_ADD_EXECUTABLE(xbcrypt
   ds_decrypt.c
   ds_local.c
   ds_stdout.c
+  file_utils.c
   )
 
 SET_TARGET_PROPERTIES(xbcrypt
